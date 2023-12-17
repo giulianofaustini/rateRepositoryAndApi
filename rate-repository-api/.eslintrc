@@ -1,6 +1,5 @@
 {
   "extends": "eslint:recommended",
-  "parser": "@babel/eslint-parser",
   "env": {
     "node": true,
     "es6": true,
@@ -9,5 +8,11 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "plugins": ["jest"]
+  "plugins": ["jest"],
+  "overrides": [
+    {
+      "files": ["**/config.js"],
+      "parser": "@babel/eslint-parser"
+    }
+  ]
 }
