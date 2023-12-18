@@ -1,12 +1,17 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
+import Costants from 'expo-constants'
+
 const httpLink = createHttpLink({
-  // Replace the IP address part with your own IP address!
-  uri: 'http://192.168.32.135:4000/graphql',
+
+ 
+
+ uri: Costants.expoConfig.extra.apolloUri,
 });
 
 const createApolloClient = () => {
   return new ApolloClient({
+    
     link: httpLink,
     cache: new InMemoryCache(),
   });

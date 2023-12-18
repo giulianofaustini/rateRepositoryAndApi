@@ -1,4 +1,6 @@
-{
+import 'dotenv/config';
+
+export default {
   "expo": {
     "name": "my-app",
     "slug": "my-app",
@@ -6,6 +8,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    extra: {
+      env: process.env.ENV,
+      apolloUri: process.env.APOLLO_URI,
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

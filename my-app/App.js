@@ -4,10 +4,16 @@ import createApolloClient from './src/components/utils/apolloClient';
 
 import { StatusBar } from 'expo-status-bar';
 import { NativeRouter } from 'react-router-native';
+import Costants from 'expo-constants';
 
 const apolloClient = createApolloClient();
 
 const App = () => {
+
+  console.log('Constants', Costants.expoConfig);
+
+
+
   return (
     <>
       <NativeRouter>
