@@ -18,10 +18,11 @@ const ItemSeparator = () => <View style={styles.separator} />;
   
 
     const { repositories } = useRepositories();
-  // Get the nodes from the edges array
+    
+ 
   const repositoryNodes = repositories
-    ? repositories.edges.map(edge => edge.node)
-    : [];
+
+    // console.log('repository nodes in repository list ', repositoryNodes);
 
 
     return (
