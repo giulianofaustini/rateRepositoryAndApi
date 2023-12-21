@@ -5,8 +5,11 @@ import createApolloClient from './src/components/utils/apolloClient';
 import { StatusBar } from 'expo-status-bar';
 import { NativeRouter } from 'react-router-native';
 import Costants from 'expo-constants';
+import AuthStorage from './src/components/utils/authStorage';
+const authStorage = new AuthStorage();
 
-const apolloClient = createApolloClient();
+
+const apolloClient = createApolloClient(authStorage);
 
 const App = () => {
 
