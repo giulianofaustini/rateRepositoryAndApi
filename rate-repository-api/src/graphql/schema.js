@@ -67,5 +67,5 @@ export const resolvers = merge(
   Review.resolvers,
   ReviewConnection.resolvers,
   UserConnection.resolvers,
-  deleteReviewMutation.resolvers,
+  deleteReviewMutation.resolvers
 );

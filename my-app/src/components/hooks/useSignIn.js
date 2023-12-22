@@ -25,7 +25,12 @@ export const useSignIn = () => {
         data.authenticate.accessToken
       );
 
+      
       await authStorage.setAccessToken(data.authenticate.accessToken);
+
+      const storedToken = await authStorage.getAccessToken();
+
+      console.log("Stored Token in useSign iN:", storedToken);
 
       await apolloClient.resetStore();
 

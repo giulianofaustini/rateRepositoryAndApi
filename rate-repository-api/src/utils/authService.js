@@ -12,6 +12,7 @@ class AuthService {
     this.dataLoaders = dataLoaders;
   }
 
+
   async getUserId() {
     if (!this.accessToken) {
       return null;

@@ -11,8 +11,7 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    repository: async (obj, args, { dataLoaders: { repositoryLoader } }) =>
-      repositoryLoader.load(args.id),
+    repository: async (obj, args, { dataLoaders: { repositoryLoader } }) => repositoryLoader.load(args.id),
   },
 };
 

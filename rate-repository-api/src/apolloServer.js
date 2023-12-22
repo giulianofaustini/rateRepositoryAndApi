@@ -14,7 +14,7 @@ const apolloErrorFormatter = (error) => {
 
   let normalizedError = new ApolloError(
     'Something went wrong',
-    'INTERNAL_SERVER_ERROR',
+    'INTERNAL_SERVER_ERROR'
   );
 
   if (originalError instanceof ValidationError) {

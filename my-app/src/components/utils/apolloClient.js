@@ -20,7 +20,7 @@ const createApolloClient = ( authStorage ) => {
 
     try {
       const accessToken = await authStorage.getAccessToken();
-      console.log('Access Token:', accessToken);
+      console.log('Access Token in apollo Client file:', accessToken);
       return {
         headers: {
           ...headers,
@@ -35,7 +35,7 @@ const createApolloClient = ( authStorage ) => {
   );
   
     return new ApolloClient({  
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 };

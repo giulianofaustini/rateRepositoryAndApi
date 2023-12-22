@@ -13,6 +13,7 @@ export const resolvers = {
   Query: {
     me: (obj, args, { authService }) => {
       return authService.getUser();
+      
     },
   },
 };

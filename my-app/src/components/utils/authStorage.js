@@ -9,6 +9,8 @@ class AuthStorage {
     // Get the access token for the storage
     const token = await AsyncStorage.getItem(`${this.namespace}:token`)
 
+    console.log('Token in AuthStorage:', token);
+
     return token ? JSON.parse(token) : [];
   }
 
@@ -28,3 +30,4 @@ class AuthStorage {
 }
 
 export default AuthStorage;
+
