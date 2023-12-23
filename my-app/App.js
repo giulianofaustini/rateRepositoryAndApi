@@ -36,3 +36,9 @@ const App = () => {
 
 export default App;
 
+
+
+// http://localhost:5001/api/repositories 
+// http://192.168.32.135:5001/api/repositories
+// http://localhost:4000/
+// https://5db1-193-210-162-123.ngrok-free.app/graphql
