@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_REPOSITORIES = gql`
   query {
@@ -24,7 +24,6 @@ export const GET_REPOSITORIES = gql`
   }
 `;
 
-
 export const ME = gql`
   query {
     me {
@@ -32,21 +31,36 @@ export const ME = gql`
       username
     }
   }
-`;  
+`;
 
-export const GET_GIT_URL = gql`
-query Repository($id: ID!) {
-  repository(id: $id) {
-    id
-    fullName
-    url
-    description
-    language
-    forksCount
-    stargazersCount
-    ratingAverage
-    reviewCount
-    ownerAvatarUrl
+
+export const GET_REPOSITORY_AND_REVIEWS = gql`
+  query RepositoryReviews($id: ID!) {
+    repository(id: $id) {
+      id
+      fullName
+      url
+      description
+      language
+      forksCount
+      stargazersCount
+      ratingAverage
+      reviewCount
+      ownerAvatarUrl
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
   }
-}
 `;

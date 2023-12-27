@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, Button, Linking } from 'react-native';
+import { View, Text, Button, Linking, ScrollView } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-native';
-import { GET_GIT_URL } from './graphql/queries';
-import { RepositoryItem } from './RepositoryItem'; 
+import { GET_REPOSITORY_AND_REVIEWS } from './graphql/queries';
+import { RepositoryItem } from './RepositoryItem';
+import { ReviewItem } from './ReviewItem';
 
 export const SingleRepositoryView = () => {
   const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_GIT_URL, {
+  const { loading, error, data } = useQuery(GET_REPOSITORY_AND_REVIEWS, {
     variables: { id },
   });
 
@@ -16,18 +17,25 @@ export const SingleRepositoryView = () => {
 
   const { repository } = data;
 
-//   console.log('repository in single repository view', repository);
-
   const handleOpenGitHub = () => {
     Linking.openURL(repository.url);
   };
 
   return (
-    <View>
-      <RepositoryItem item={repository} />
-      <Button title="Open in GitHub" onPress={handleOpenGitHub} />
-    </View>
+    <ScrollView>
+      <View style={{ padding: 16 }}>
+        <RepositoryItem item={repository} />
+        <Button title="Open in GitHub" onPress={handleOpenGitHub} />
+
+        <Text style={{ fontSize: 12, fontWeight: 'bold', marginTop: 16 }}>
+          Reviews
+        </Text>
+
+        {/* FlatList is replaced with direct ReviewItem rendering */}
+        {repository.reviews.edges.map(({ node }) => (
+          <ReviewItem key={node.id} review={node} />
+        ))}
+      </View>
+    </ScrollView>
   );
 };
-
-
