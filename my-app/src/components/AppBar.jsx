@@ -94,6 +94,19 @@ export const AppBar = () => {
       
           </Pressable>
         )}
+       { signedIn ? (
+        <Link to="/create-review">
+        <TextWithThemes
+          fontSize="subheading"
+          fontWeight="bold"
+          style={styles.link}
+        >
+          Create a review
+        </TextWithThemes>
+      </Link>
+
+       ) : null }
+        
 
         <Link to="/">
           <TextWithThemes

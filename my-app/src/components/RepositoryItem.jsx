@@ -15,7 +15,7 @@ const formatCount = (count) => {
 
 export const RepositoryItem = ({ item }) => {
 
-  // console.log('item in repository item', item);
+  console.log('item in repository item', item);
   return (
     <View style={{ backgroundColor: "#e1e4e8" }}>
       <View style={styles.container}>
