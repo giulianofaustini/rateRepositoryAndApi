@@ -3,6 +3,9 @@ import { useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
 import { Text } from 'react-native';
 
+
+
+
 const useRepositories = () => {
   const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',

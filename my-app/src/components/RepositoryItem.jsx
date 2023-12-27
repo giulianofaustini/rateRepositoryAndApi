@@ -3,6 +3,9 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { TextWithThemes } from './TextWithThemes';
 
 const formatCount = (count) => {
+  if (count == null) {
+    return 'N/A'; 
+  }
   if (count >= 1000) {
     const formattedCount = (count / 1000).toFixed(1);
     return `${formattedCount}k`;
@@ -10,44 +13,59 @@ const formatCount = (count) => {
   return count.toString();
 };
 
-export const RepositoryItem = ({ item, color, fontSize, fontWeight, style }) => {
+export const RepositoryItem = ({ item }) => {
+
+  // console.log('item in repository item', item);
   return (
-    <View style={{backgroundColor:"#e1e4e8" }} >
+    <View style={{ backgroundColor: "#e1e4e8" }}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: item.ownerAvatarUrl }} style={styles.image} />
+          <Image source={{ uri: item?.ownerAvatarUrl }} style={styles.image} />
         </View>
         <View style={styles.textContainer}>
           <TextWithThemes color="textSecondary" fontWeight="bold">
-            {item.fullName}
+            {item?.fullName ?? 'N/A'}
           </TextWithThemes>
-          <TextWithThemes color="textPrimary">{item.description}</TextWithThemes>
-          <TextWithThemes color="textPrimary" fontWeight="bold" style={{color:"white" , backgroundColor: '#0366d6' , width: '40%' , borderRadius: 2, padding: 3}} >
-            
-            {item.language}
+          <TextWithThemes color="textPrimary">
+            {item?.description ?? 'Description not available'}
+          </TextWithThemes>
+          <TextWithThemes
+            color="textPrimary"
+            fontWeight="bold"
+            style={{
+              color: "white",
+              backgroundColor: "#0366d6",
+              width: '40%',
+              borderRadius: 2,
+              padding: 3,
+            }}
+          >
+            {item?.language ?? 'N/A'}
           </TextWithThemes>
         </View>
       </View>
 
-      <View>
+      <View testID="repositoryItem">
         <View style={styles.additionalInfoContainer}>
           <View>
-          <Text style={{fontWeight:"bold"}} >{formatCount(item.forksCount)}</Text>
-            <Text>Forks</Text> 
+            <Text style={{ fontWeight: "bold" }}>
+              {formatCount(item?.forksCount)}
+            </Text>
+            <Text>Forks</Text>
           </View>
           <View>
-          <Text  style={{fontWeight:"bold"}}>{formatCount(item.stargazersCount)}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {formatCount(item?.stargazersCount)}
+            </Text>
             <Text>Stars</Text>
           </View>
           <View>
-          <Text  style={{fontWeight:"bold"}}t>{item.ratingAverage}</Text>
+            <Text style={{ fontWeight: "bold" }}>{item?.ratingAverage}</Text>
             <Text>Rating</Text>
-            
           </View>
           <View>
-          <Text  style={{fontWeight:"bold"}}>{item.reviewCount}</Text>
+            <Text style={{ fontWeight: "bold" }}>{item?.reviewCount}</Text>
             <Text>Review</Text>
-           
           </View>
         </View>
       </View>

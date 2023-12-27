@@ -1,20 +1,11 @@
-
 import React from 'react';
-import { View, StyleSheet, Pressable, Text } from 'react-native';
-import { Formik } from 'formik';
-import { FormikTextInput } from './FormikTextInput';
-import * as yup from 'yup';
+import { View, StyleSheet } from 'react-native';
 import { useSignIn } from './hooks/useSignIn';
 import { useNavigate } from 'react-router-native';
-
-const validationSchema = yup.object().shape({
-  username: yup.string().min(5, 'Username must be at least 5 characters').required('Username is required'),
-  password: yup.string().min(5, 'Password must be at least 5 characters').required('Password is required'),
-});
+import { SignInForm } from './SignInForm';
 
 export const SignIn = () => {
   const [signIn] = useSignIn();
-
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
@@ -22,35 +13,20 @@ export const SignIn = () => {
 
     try {
       const accessToken = await signIn({ username, password });
-
       console.log('Access Token in SignIn component:', accessToken);
 
       if (accessToken) {
         navigate('/');
       }
-
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ handleSubmit }) => (
-        <View style={styles.container}>
-          <FormikTextInput name="username" placeholder="Username" style={styles.input} />
-          <FormikTextInput name="password" placeholder="Password" secureTextEntry style={styles.input} />
-
-          <Pressable onPress={handleSubmit}>
-            <Text style={styles.button} color='textPrimary'>Sign in</Text>
-          </Pressable>
-        </View>
-      )}
-    </Formik>
+    <View style={styles.container}>
+      <SignInForm onSubmit={onSubmit} />
+    </View>
   );
 };
 
@@ -59,26 +35,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#e1e4e8',
     padding: 20,
     marginTop: 20,
-    border: 5,
     borderRadius: 5,
-  },
-  input: {
-    backgroundColor: 'white',
-    padding: 15,
-    marginTop: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'grey',
-  },
-  button: {
-    color: 'white',
-    backgroundColor: 'blue',
-    padding: 5,
-    marginTop: 20,
-    borderRadius: 5,
-    textAlign: 'center',
   },
 });
+
+export default SignIn;
+
 
 
 // baf1266959c3b2be3ff4252c8c6f99dac5011232

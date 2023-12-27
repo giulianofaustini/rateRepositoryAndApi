@@ -33,3 +33,20 @@ export const ME = gql`
     }
   }
 `;  
+
+export const GET_GIT_URL = gql`
+query Repository($id: ID!) {
+  repository(id: $id) {
+    id
+    fullName
+    url
+    description
+    language
+    forksCount
+    stargazersCount
+    ratingAverage
+    reviewCount
+    ownerAvatarUrl
+  }
+}
+`;

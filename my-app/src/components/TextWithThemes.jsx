@@ -1,5 +1,5 @@
 import { Text as NativeText, StyleSheet } from 'react-native';
-
+import { Platform } from 'react-native';
 
 import { theme } from './theme';
 

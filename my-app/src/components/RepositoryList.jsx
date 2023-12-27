@@ -1,7 +1,8 @@
-import { FlatList, View, StyleSheet  } from "react-native";
-import  {RepositoryItem}  from "./RepositoryItem";
-import React, { useState, useEffect } from 'react';
-import useRepositories  from './hooks/useRepositories'
+import React from 'react';
+import { FlatList, View, StyleSheet, Pressable } from "react-native";
+import { useNavigate } from 'react-router-native';
+import { RepositoryItem } from "./RepositoryItem"; 
+import useRepositories from './hooks/useRepositories';
 
 const styles = StyleSheet.create({
   separator: {
@@ -9,29 +10,28 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const ItemSeparator = () => <View style={styles.separator} />;
 
+export const RepositoryListContainer = ({ repositories }) => {
+  const navigate = useNavigate();
 
+  return (
+    <FlatList
+      data={repositories}
+      ItemSeparatorComponent={ItemSeparator}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <Pressable onPress={() => navigate(`/git-url/${item.id}`)}>
+          <RepositoryItem item={item} />
+        </Pressable>
+      )}
+    />
+  );
+};
 
-  export const RepositoryList = () => {
-  
+export const RepositoryList = () => {
+  const { repositories } = useRepositories(); // Make sure to import useRepositories
 
-    const { repositories } = useRepositories();
-    
- 
-  const repositoryNodes = repositories
-
-    // console.log('repository nodes in repository list ', repositoryNodes);
-
-
-    return (
-      <FlatList
-        data={repositoryNodes}
-        ItemSeparatorComponent={ItemSeparator}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <RepositoryItem item={item} />}
-      />
-    );
-  };
+  return <RepositoryListContainer repositories={repositories} />;
+};
 

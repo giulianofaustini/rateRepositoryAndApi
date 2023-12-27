@@ -1,16 +1,12 @@
 
-import { Text, StyleSheet, View, Pressable } from "react-native";
-import { RepositoryList} from "./RepositoryList"
+import {  View, Pressable } from "react-native";
+import {RepositoryList} from "./RepositoryList"
 import { AppBar } from "./AppBar";
 import { Route, Routes, Navigate } from "react-router-native";
 import { SignIn } from "./SignIn";
+import {SingleRepositoryView} from "./SingleRepositoryView";
 
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    flexShrink: 1,
-  },
-});
+
 
 export const Main = () => {
   return (
@@ -23,8 +19,8 @@ export const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/signIn" element={<SignIn to="/signIn" replace />} />
-
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/git-url/:id" element={<SingleRepositoryView />} /> 
       </Routes>
     </View>
   );
