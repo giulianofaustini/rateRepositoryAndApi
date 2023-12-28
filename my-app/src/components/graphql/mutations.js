@@ -23,7 +23,6 @@ export const CREATE_REVIEW = gql`
         id
         username
       }
-      id
     }
   }
 `;

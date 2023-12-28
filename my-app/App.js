@@ -1,41 +1,36 @@
-import {Main} from './src/components/Main';
+import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import createApolloClient from './src/components/utils/apolloClient';
-
 import { StatusBar } from 'expo-status-bar';
-import { NativeRouter } from 'react-router-native';
-import Costants from 'expo-constants';
+import Constants from 'expo-constants';
 import AuthStorage from './src/components/utils/authStorage';
+import AuthStorageContext from './src/components/contexts/AuthStorageContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { Main } from './src/components/Main'; // Ensure the path is correct
+import { NativeRouter } from 'react-router-native';
 
-import AuthStorageContext from './src/components/contexts/AuthStorageContext'
 
 const authStorage = new AuthStorage();
-
-
 const apolloClient = createApolloClient(authStorage);
 
 const App = () => {
-
-  console.log('Constants', Costants.expoConfig);
-
-
+  console.log('Constants', Constants.expoConfig);
 
   return (
-    <>
-      <NativeRouter>
-        <ApolloProvider client={apolloClient}>
-          <AuthStorageContext.Provider value={authStorage}>
-            <Main />
-          </AuthStorageContext.Provider>
-        </ApolloProvider>
-      </NativeRouter>
+    <ApolloProvider client={apolloClient}>
+      <AuthStorageContext.Provider value={authStorage}>
+        <NavigationContainer >
+          <NativeRouter>
+          <Main />
+          </NativeRouter>
+        </NavigationContainer>
+      </AuthStorageContext.Provider>
       <StatusBar style="auto" />
-    </>
+    </ApolloProvider>
   );
 };
 
 export default App;
-
 
 
 // http://localhost:5001/api/repositories 
