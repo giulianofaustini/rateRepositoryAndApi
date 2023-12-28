@@ -26,3 +26,17 @@ export const CREATE_REVIEW = gql`
     }
   }
 `;
+
+
+export const CREATE_USER = gql`
+  mutation CreateUser($username: String!, $password: String! $passwordConfirmation: String!) {
+    createUser(user: {
+      username: $username,
+      password: $password,
+      passwordConfirmation: $passwordConfirmation
+    }) {
+      id
+      username
+    }
+  }
+`;

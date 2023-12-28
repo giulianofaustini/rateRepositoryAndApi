@@ -106,6 +106,18 @@ export const AppBar = () => {
       </Link>
 
        ) : null }
+
+        {!signedIn ? (
+          <Link to='/sign-up' >
+            <TextWithThemes
+              fontSize="subheading"
+              fontWeight="bold"
+              style={styles.link}
+            >
+              Sign up
+            </TextWithThemes>
+          </Link>
+        ) : null}
         
 
         <Link to="/">
