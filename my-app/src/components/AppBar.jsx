@@ -12,7 +12,7 @@ import AuthStorageContext from "./contexts/AuthStorageContext";
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    height: 100,
+    height: 85,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",

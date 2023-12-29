@@ -6,12 +6,20 @@ import { Text } from 'react-native';
 
 
 
-const useRepositories = () => {
+const useRepositories = (sortingCriteria) => {
+
+  const orderBy = sortingCriteria.split('-')[0]; 
+  const orderDirection = sortingCriteria.split('-')[1] || 'DESC'; 
+
+  console.log('sortingCriteria from useRepositories hook', orderBy, orderDirection);
+
   const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
+   
     fetchPolicy: 'cache-and-network',
+    variables: { orderBy, orderDirection },
   });
 
-//   console.log('data', data);
+  
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -22,11 +30,11 @@ const useRepositories = () => {
 
   const edges = data?.repositories?.edges || [];
 
-//   console.log('edges', edges);
+  console.log('edges form the userepositories', edges);
 
   const repositories = edges.map(edge => edge.node);
 
-//   console.log('repositories', repositories);
+  console.log('repositories fro the userepositories', repositories);
 
   return { repositories, loading, error, refetch };
 };

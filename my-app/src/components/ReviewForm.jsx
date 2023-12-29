@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREATE_REVIEW } from "../components/graphql/mutations";
 
-import { GET_REPOSITORIES } from "../components/graphql/queries";
 import { useNavigate } from "react-router-native";
 
 const reviewSchema = yup.object().shape({
@@ -31,15 +30,10 @@ export const ReviewForm = () => {
         rating: Number(rating),
         text: review,
       },
-      refetchQueries: [
-        {
-          query: GET_REPOSITORIES,
-          variables: { orderBy: "CREATED_AT", orderDirection: "DESC" },
-        },
+      
         
-        console.log("refetching the repositories after creating a review"),
-      ],
-    });
+
+     });
 
     console.log('review form has mounted and the review has been created and the repositories have been refetched', data)
 

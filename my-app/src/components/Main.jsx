@@ -19,7 +19,9 @@ export const Main = () => {
   
   return (
     <View>
+      <View>
       <AppBar />
+      </View>
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signIn" element={<SignIn />} />
