@@ -4,6 +4,7 @@ import { View, TextInput, Text, Button, StyleSheet } from "react-native";
 import * as yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREATE_REVIEW } from "../components/graphql/mutations";
+import { GET_REPOSITORIES } from "../components/graphql/queries";
 
 import { useNavigate } from "react-router-native";
 
@@ -30,9 +31,13 @@ export const ReviewForm = () => {
         rating: Number(rating),
         text: review,
       },
-      
-        
+      refetchQueries: [
+        {
+          query: GET_REPOSITORIES,
+        },
 
+        console.log("refetching the repositories after creating a review"),
+      ],
      });
 
     console.log('review form has mounted and the review has been created and the repositories have been refetched', data)
