@@ -11,6 +11,12 @@ import {SignUpForm} from "./SignUpForm";
 
 
 export const Main = () => {
+
+  const handleSignUp = (userData) => {
+    console.log("User signed up:", userData);
+    
+  };
+  
   return (
     <View>
       <AppBar />
@@ -19,7 +25,7 @@ export const Main = () => {
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/git-url/:id" element={<SingleRepositoryView />} />
         <Route path="/create-review" element={<ReviewForm />} />
-        <Route path="/sign-up" element={<SignUpForm />} />
+        <Route path="/signUp" element={<SignUpForm onSignUp={handleSignUp} />} />
       </Routes>
     </View>
   );

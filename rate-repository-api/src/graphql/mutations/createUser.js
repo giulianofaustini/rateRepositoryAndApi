@@ -4,11 +4,13 @@ import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcrypt';
 
 import User from '../../models/User';
+import { de } from 'date-fns/locale';
 
 export const typeDefs = gql`
   input CreateUserInput {
     username: String!
     password: String!
+    confirmPassword: String!
   }
 
   extend type Mutation {
@@ -36,6 +38,7 @@ const argsSchema = yup.object().shape({
   user: yup.object().shape({
     username: yup.string().min(1).max(30).lowercase().trim(),
     password: yup.string().min(5).max(50).trim(),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null]),
   }),
 });
 
@@ -45,10 +48,12 @@ export const resolvers = {
   Mutation: {
     createUser: async (obj, args) => {
       const {
-        user: { password, username, ...user },
+        user: { password, username, confirmPassword, ...user },
       } = await argsSchema.validate(args, {
         stripUnknown: true,
       });
+
+      delete user.confirmPassword;
 
       const passwordHash = await createPasswordHash(password);
 
