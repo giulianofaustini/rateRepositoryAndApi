@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-native";
 import { RepositoryItem } from "./RepositoryItem";
 import useRepositories from "./hooks/useRepositories";
 import { Picker } from "@react-native-picker/picker";
+import { TextInput } from "./TextInput";
+import { useDebounce } from "use-debounce";
 
 const styles = StyleSheet.create({
   separator: {
@@ -38,8 +40,20 @@ export const RepositoryListContainer = ({ repositories }) => {
 
 export const RepositoryList = () => {
   const [sortingCriteria, setSortingCriteria] = useState("CREATED_AT");
+
+
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
+
+  const onSearchChange = (value) => {
+    setSearchKeyword(value);
+    
+  };
+
+ 
+
   const { repositories, loading, error, refetch } =
-    useRepositories(sortingCriteria);
+    useRepositories(sortingCriteria, debouncedSearchKeyword);
 
   const onSortingCriteriaChange = (value) => {
     setSortingCriteria(value);
@@ -74,6 +88,14 @@ export const RepositoryList = () => {
           {loading && <Text>loading...</Text>}
           {error && <Text>Error fetching repositories</Text>}
         </Picker>
+      </View>
+      <View style={styles.container}>
+        <TextInput
+          placeholder="Search repositories..."
+          onChangeText={onSearchChange}
+          value={searchKeyword}
+          style={{ padding: 10, borderColor: "gray", borderWidth: 1 }}
+        />
       </View>
       <View>
         <RepositoryListContainer repositories={repositories} />

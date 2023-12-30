@@ -6,7 +6,7 @@ import { Text } from 'react-native';
 
 
 
-const useRepositories = (sortingCriteria) => {
+const useRepositories = (sortingCriteria, searchKeyword ) => {
 
   const orderBy = sortingCriteria.split('-')[0]; 
   const orderDirection = sortingCriteria.split('-')[1] || 'DESC'; 
@@ -16,7 +16,7 @@ const useRepositories = (sortingCriteria) => {
   const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
    
     fetchPolicy: 'cache-and-network',
-    variables: { orderBy, orderDirection },
+    variables: { orderBy, orderDirection, searchKeyword },
   });
 
   
