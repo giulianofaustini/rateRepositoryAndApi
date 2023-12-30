@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: "center",
   },
+  notFountText: {
+    marginTop: 10,
+    color: "red",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
@@ -23,6 +29,11 @@ const ItemSeparator = () => <View style={styles.separator} />;
 export const RepositoryListContainer = ({ repositories }) => {
   console.log("repositories in repository list container", repositories);
   const navigate = useNavigate();
+
+   if (repositories && repositories.length === 0) {
+    return <Text style={styles.notFountText} >No repositories found for the given search keyword.</Text>;
+  }
+
 
   return (
     <FlatList
