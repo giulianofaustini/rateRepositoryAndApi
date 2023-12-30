@@ -7,6 +7,7 @@ import { SignIn } from "./SignIn";
 import {SingleRepositoryView} from "./SingleRepositoryView";
 import { ReviewForm } from "./ReviewForm";
 import {SignUpForm} from "./SignUpForm";
+import { MyReviews } from "./MyReviews";
 
 
 
@@ -28,6 +29,7 @@ export const Main = () => {
         <Route path="/git-url/:id" element={<SingleRepositoryView />} />
         <Route path="/create-review" element={<ReviewForm />} />
         <Route path="/signUp" element={<SignUpForm onSignUp={handleSignUp} />} />
+        <Route path="/my-review" element={<MyReviews />} />
       </Routes>
     </View>
   );
