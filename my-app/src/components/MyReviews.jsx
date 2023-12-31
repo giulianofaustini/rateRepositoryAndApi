@@ -52,6 +52,7 @@ export const MyReviews = () => {
 
 
   return (
+    
     <View>
       {userReviews?.map((review) => (
         <View key={review.id} style={styles.reviewContainer}>

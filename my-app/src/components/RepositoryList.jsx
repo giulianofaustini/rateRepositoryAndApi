@@ -7,6 +7,7 @@ import { Picker } from "@react-native-picker/picker";
 import { TextInput } from "./TextInput";
 import { useDebounce } from "use-debounce";
 
+
 const styles = StyleSheet.create({
   separator: {
     height: 10,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories , onEndReach}) => {
   console.log("repositories in repository list container", repositories);
   const navigate = useNavigate();
 
@@ -39,6 +40,8 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositories}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/git-url/${item.id}`)}>
@@ -63,8 +66,8 @@ export const RepositoryList = () => {
 
  
 
-  const { repositories, loading, error, refetch } =
-    useRepositories(sortingCriteria, debouncedSearchKeyword);
+  const { repositories, loading, error, refetch , fetchMore, fetchMoreReviews } =
+    useRepositories( sortingCriteria, debouncedSearchKeyword);
 
   const onSortingCriteriaChange = (value) => {
     setSortingCriteria(value);
@@ -72,6 +75,11 @@ export const RepositoryList = () => {
   };
 
   console.log("repositories in repository list", repositories);
+
+  const onEndReach = () => {
+    fetchMore();
+    fetchMoreReviews();
+  };
 
   return (
     <View>
@@ -109,7 +117,7 @@ export const RepositoryList = () => {
         />
       </View>
       <View>
-        <RepositoryListContainer repositories={repositories} />
+        <RepositoryListContainer repositories={repositories} onEndReach={onEndReach} />
       </View>
     </View>
   );

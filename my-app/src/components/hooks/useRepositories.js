@@ -1,46 +1,73 @@
-// useRepositories.js
 import { useQuery } from '@apollo/client';
-import { GET_REPOSITORIES } from '../graphql/queries';
+import { GET_REPOSITORIES, GET_REPOSITORY_REVIEWS } from '../graphql/queries';
 import { Text } from 'react-native';
 
+const useRepositories = (sortingCriteria, searchKeyword) => {
+  const orderBy = sortingCriteria.split('-')[0];
+  const orderDirection = sortingCriteria.split('-')[1] || 'DESC';
 
-
-
-const useRepositories = (sortingCriteria, searchKeyword ) => {
-
-  const orderBy = sortingCriteria.split('-')[0]; 
-  const orderDirection = sortingCriteria.split('-')[1] || 'DESC'; 
-
-  console.log('sortingCriteria from useRepositories hook', orderBy, orderDirection);
-
-  const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
-   
+  const { data, loading, error, refetch, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
     variables: { orderBy, orderDirection, searchKeyword },
   });
 
-  
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        orderBy,
+        orderDirection,
+        searchKeyword,
+      },
+    });
+  };
+
+  const fetchRepositoryReviews = (repositoryId, first = 3, after) => {
+    const { data, loading, error, fetchMore } = useQuery(GET_REPOSITORY_REVIEWS, {
+      variables: { id: repositoryId, first, after },
+    });
+
+    const handleFetchMoreReviews = () => {
+      const canFetchMore = !loading && data?.repository?.reviews?.pageInfo?.hasNextPage;
+
+      if (!canFetchMore) {
+        return;
+      }
+
+      fetchMore({
+        variables: {
+          id: repositoryId,
+          first: 3,
+          after: data.repository.reviews.pageInfo.endCursor,
+        },
+      });
+    };
+
+    return { reviews: data?.repository?.reviews, loading, error, fetchMoreReviews: handleFetchMoreReviews };
+  };
 
   if (loading) {
     return <Text>Loading...</Text>;
   }
+
   if (error) {
     return <Text>Error: {error.message}</Text>;
   }
 
   const edges = data?.repositories?.edges || [];
-
-  console.log('edges form the userepositories', edges);
-
   const repositories = edges.map(edge => edge.node);
 
-  console.log('repositories fro the userepositories', repositories);
 
-  return { repositories, loading, error, refetch };
+  return { repositories, loading, error, refetch, fetchMore: handleFetchMore, fetchRepositoryReviews, ...result };
 };
 
 export default useRepositories;
-
 
 
 

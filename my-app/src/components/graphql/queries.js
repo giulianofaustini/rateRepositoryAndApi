@@ -18,11 +18,18 @@ export const GET_REPOSITORIES = gql`
           language
           ownerAvatarUrl
         }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
       totalCount
     }
   }
 `;
+
 
 export const ME = gql`
   query GetCurrentUser($includeReviews: Boolean = false) {
@@ -84,6 +91,36 @@ export const GET_REPOSITORY_AND_REVIEWS = gql`
               username
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+
+export const GET_REPOSITORY_REVIEWS = gql`
+  query GetRepositoryReviews($id: ID!, $first: Int, $after: String) {
+    repository(id: $id) {
+      id
+      fullName
+      reviews(first: $first, after: $after) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }
